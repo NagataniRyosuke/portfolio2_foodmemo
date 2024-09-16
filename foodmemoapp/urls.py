@@ -17,4 +17,7 @@ urlpatterns = [
     path('search/', views.search_restaurants, name='search_restaurants'),
     path('timeline/', TimelineView.as_view(), name='timeline'),
     path('memo/<int:pk>/share/twitter/', share_on_twitter_view, name='share_on_twitter'),
-] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

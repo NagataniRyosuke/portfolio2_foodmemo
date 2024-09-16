@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-@f-%n2va977s^co^&(w1wqaj4x26pr+xa3nk0t2)4d3)@rjjx^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['portfolio2-foodmemo.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -139,6 +139,5 @@ LOGIN_URL = "login"
 HOTPEPPER_API_KEY = "7f4ce92ec2f9f0c1"
 GOOGLE_MAPS_API_KEY = 'AIzaSyCefnYHy-VQpgBkTX2lz50HMyBch7XbGiI'
 
-ALLOWED_HOSTS = ['portfolio2-foodmemo.onrender.com', 'localhost', '127.0.0.1']
 
 

@@ -1,0 +1,145 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Zen Kurenaido", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    padding-bottom: 50vh;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+nav {
+    background-color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    top: 0;
+}
+
+nav a {
+    color: #333;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+nav a:hover {
+    color: #007bff;
+}
+
+ul {
+    display: flex;
+    list-style: none;
+}
+
+/* login.css */
+.back-img {
+    margin: 0;
+    height: 100vh;
+    background-image: url('/static/css/img/cook_photo19.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    position: relative;
+}
+
+.v-text {
+    font-size: 40px;
+    position: absolute;
+    top: 175px;
+    right: 450px;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    color: black;
+    transition: opacity 0.1s ease;
+}
+
+.login {
+    padding: 40px;
+    
+}
+
+.login-form {
+    padding: 25px;
+}
+
+/* mold_list.css */
+.list-search {
+    padding-bottom: 30px;
+    text-align: center;
+    position: relative;
+}
+
+.list-search h3 {
+    padding-bottom: 10px;
+    font-size: 30px;
+}
+
+.memo-container {
+    width: 60%;
+    background-color:rgb(255, 247, 240);
+    flex-direction: column;
+    margin: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 50px;
+}
+
+.line-3, .line-4{
+    text-align: center;
+}
+
+.line-1,.line-2 {
+    display: flex;
+}
+
+.line-1 p, .line-2 p {
+    padding: 20px 20px 20px 20px;
+    font-size: 20px;
+}
+
+.line-4 img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.line-4 p {
+    width: 300px;
+    height: 200px;
+}
+
+
+main {
+    margin: 50px;  
+}
+
+/* mold_form.css */
+#form-container { 
+    margin-top: 30px;
+}
+
+.form-1 {
+    display: flex;
+    padding: 20px 20px 20px 20px;
+}
+
+.form-2 {
+    padding: 0px 20px 20px 20px;
+}

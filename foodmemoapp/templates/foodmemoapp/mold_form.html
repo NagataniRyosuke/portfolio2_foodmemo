@@ -1,0 +1,119 @@
+{% extends 'foodmemoapp/base.html' %}{% block content %}
+
+
+<nav>
+    <h1>Food Diary</h1>
+    <ul>
+        <li><a href="{% url 'top' %}">ホーム</a></li>
+        <li><a href="{% url 'create-memo' %}">新しい投稿</a></li>
+        <li><a href="{% url 'timeline' %}">タイムライン</a></li>
+    </ul>
+</nav>
+<div class="back-img" id="text-to-hide">
+    <div class="v-text">
+        <h1>食歴。</h1>
+    </div>
+</div>
+<div class="memo-container" id="form-container">
+    <div class="form-1">
+        <h1>New Post</h1>
+    </div>
+    <form action="" method="post" enctype="multipart/form-data" class="form-2">
+        {% csrf_token %} 
+        {{form.as_p}}
+        <input type="submit" value="追加">
+    </form>
+</div>
+<h2>店舗検索</h2>
+
+<form method="GET" action="{% url 'search_restaurants' %}" class="search-form">
+    <input type="text" name="query" placeholder="店名で検索" value="{{ query }}">
+    <button type="submit">検索</button>
+</form>
+
+
+<h2>検索結果</h2>
+
+{% if restaurants %}
+<ul class="restaurant-list">
+    {% for restaurant in restaurants %}
+    <li class="restaurant-item">
+        <h3><a href="javascript:void(0);"
+                onclick="showOnMap('{{ restaurant.address|escapejs }}', '{{ restaurant.name|escapejs }}');">
+                {{restaurant.name }}
+            </a>
+        </h3>
+        <p>住所: {{ restaurant.address }}</p>
+        <p>電話番号: {{ restaurant.tel }}</p>
+        {% if restaurant.image_url.shop_image1 %}
+        <img src="{{ restaurant.image_url.shop_image1 }}" alt="{{ restaurant.name }}" style="max-width: 300px;">
+        {% endif %}
+        <p><a href="{{ restaurant.url }}" target="_blank">詳細を見る</a></p>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>該当する店舗が見つかりませんでした。</p>
+{% endif %}
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap" async
+    defer></script>
+
+<!-- マップ -->
+<div id="map" style="height: 400px; width: 100%;"></div>
+
+<script>
+    let geocoder;
+    let map;
+
+    function initMap() {
+        geocoder = new google.maps.Geocoder();
+        map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: { lat: 35.6895, lng: 139.6917 }
+        });
+    }
+
+    function showOnMap(address, name) {
+        console.log('住所:${address},名前:${name}');
+        geocodeAddress(address, name);
+    }
+
+    function geocodeAddress(address, name) {
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status === 'OK') {
+                map.setCenter(results[0].geometry.location);
+                const marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location,
+                    title: name
+                });
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `<h3>${name}</h3><p>${address}</p>`
+                });
+
+                marker.addListener('click', function () {
+                    infoWindow.open(map, marker);
+                });
+            } else {
+                console.error('Geocode was not successful for the following reason: ${status}');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', function () {
+        const textElement = document.getElementById('text-to-hide');
+        const scrollPosition = window.scrollY;
+
+        // スクロールが100pxを超えたら文字をフェードアウト
+        if (scrollPosition > 250) {
+            textElement.style.opacity = '0'; // 透明にする
+            textElement.style.transition = 'opacity 0.4s ease'; // フェードアウトのアニメーション
+        } else {
+            textElement.style.opacity = '1'; // 100px未満なら再表示
+        }
+    });
+</script>
+
+{% endblock content %}

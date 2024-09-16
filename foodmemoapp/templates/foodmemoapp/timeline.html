@@ -1,0 +1,31 @@
+{% extends 'foodmemoapp/base.html' %}
+{% load static %} <!-- staticタグをロード -->
+
+{% block content %}
+<nav>
+    <h1>Food Diary</h1>
+    <ul>
+        <li><a href="{% url 'top' %}">ホーム</a></li>
+        <li><a href="{% url 'create-memo' %}">新しい投稿</a></li>
+        <li><a href="{% url 'timeline' %}">タイムライン</a></li>
+    </ul>
+</nav>
+<h1>タイムライン</h1>
+
+<ul>
+    {% for memo in memos %}
+    <li>
+        <strong>{{ memo.user.username }}</strong>: {{ memo.name }}
+        <p>{{ memo.description }}</p>
+        <p>投稿日時: {{ memo.Date }}</p>
+        {% if memo.image %}
+        <img src="{{ memo.image.url }}" alt="{{ memo.name }}" style="width: 200px; height: auto;">
+        {% endif %}
+
+        <a href="{{ memo.twitter_share_url }}" target="_blank">
+            <img src="{% static 'css/img/icon.png' %}" alt="twitter" style="width: 50px; height: auto;">
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

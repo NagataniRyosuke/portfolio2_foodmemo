@@ -1,0 +1,8 @@
+# Python cache files
+__pycache__/
+
+# Static files collected
+staticfiles/
+
+# Virtual environment (if you're using one)
+env/

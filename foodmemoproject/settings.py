@@ -138,4 +138,5 @@ LOGIN_URL = "login"
 HOTPEPPER_API_KEY = "7f4ce92ec2f9f0c1"
 GOOGLE_MAPS_API_KEY = 'AIzaSyCefnYHy-VQpgBkTX2lz50HMyBch7XbGiI'
 
-ALLOWED_HOSTS = ['.railway.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['portfolio2-foodmemo.onrender.com']
+

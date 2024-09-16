@@ -139,5 +139,7 @@ LOGIN_URL = "login"
 HOTPEPPER_API_KEY = "7f4ce92ec2f9f0c1"
 GOOGLE_MAPS_API_KEY = 'AIzaSyCefnYHy-VQpgBkTX2lz50HMyBch7XbGiI'
 
+CSRF_COOKIE_SECURE = False
+CSRF_TRUSTED_ORIGINS = ['https:portfolio2-foodmemo.onrender.com']
 
 

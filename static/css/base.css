@@ -213,3 +213,20 @@ main {
     position: absolute;
     right: 10px;
 }
+
+#register {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 230px;
+    background-color: rgba(255, 247, 240, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px 0 0 15px;
+}
+
+#comfirm_account {
+    padding-top: 10px;
+}

@@ -25,20 +25,20 @@
 
 
 
-<div class="login">
-    <h2>ログインフォーム</h2>
-    <div class="login-form">
-        <form action="" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="ログイン">
-        </form>
-    </div>
+    <div class="login">
+        <h2>ログインフォーム</h2>
+        <div class="login-form">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="ログイン">
+            </form>
+        </div>
 
-</div>
-<div id="new-login">
-    <p>アカウントを持っていませんか？</p>
-    <a href="{% url 'register' %}">新規登録</a>
-</div>
+    </div>
+    <div id="new-login">
+        <p>アカウントを持っていませんか？</p>
+        <a href="{% url 'register' %}">新規登録</a>
+    </div>
 
 {% endblock content %}

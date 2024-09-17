@@ -7,13 +7,14 @@
     font-style: normal;
 }
 
-body {
-    padding-bottom: 50vh;
+#bottom-space {
+    margin-bottom: 50px;
 }
 
 #map {
     height: 400px;
     width: 100%;
+    margin: 20px auto 10px;
 }
 
 nav {
@@ -71,12 +72,30 @@ ul {
 }
 
 .login {
-    padding: 40px;
-    
+    width: 40%;
+    background-color: rgb(255, 247, 240);
+    flex-direction: column;
+    margin: auto;
+    margin-top: 200px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+}
+
+.login h2 {
+    text-align: center;
 }
 
 .login-form {
     padding: 25px;
+    text-align: center;
+}
+
+#new-login {
+    width: 40%;
+    flex-direction: column;
+    margin: auto;
+    margin-bottom: 50px;
 }
 
 /* mold_list.css */
@@ -93,23 +112,26 @@ ul {
 
 .memo-container {
     width: 60%;
-    background-color:rgb(255, 247, 240);
+    background-color: rgb(255, 247, 240);
     flex-direction: column;
     margin: auto;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 50px;
 }
 
-.line-3, .line-4{
+.line-4 {
     text-align: center;
 }
 
-.line-1,.line-2 {
+.line-1,
+.line-2 {
     display: flex;
 }
 
-.line-1 p, .line-2 p {
+.line-1 p,
+.line-2 p,
+.line-3 p {
     padding: 20px 20px 20px 20px;
     font-size: 20px;
 }
@@ -127,11 +149,11 @@ ul {
 
 
 main {
-    margin: 50px;  
+    margin: 50px;
 }
 
 /* mold_form.css */
-#form-container { 
+#form-container {
     margin-top: 30px;
 }
 
@@ -142,4 +164,52 @@ main {
 
 .form-2 {
     padding: 0px 20px 20px 20px;
+}
+
+#store-search {
+    text-align: center;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+#store-searched {
+    text-align: center;
+}
+
+#delete-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 275px;
+    background-color: rgba(255, 247, 240, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#delete-container a {
+    padding: 15px;
+    font-size: 30px;
+}
+
+#delete-container form {
+    text-align: center;
+    font-size: 25px;
+    color: rgb(255, 129, 129);
+    padding-top: 60px;
+}
+
+#time-line h1 {
+    padding: 50px;
+    text-align: center;
+}
+
+.icon {
+    position: relative;
+}
+
+.icon img {
+    position: absolute;
+    right: 10px;
 }

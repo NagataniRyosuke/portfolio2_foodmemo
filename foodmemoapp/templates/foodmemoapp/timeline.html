@@ -1,31 +1,76 @@
 {% extends 'foodmemoapp/base.html' %}
-{% load static %} <!-- staticタグをロード -->
-
 {% block content %}
+{% load static %}
 <nav>
     <h1>Food Diary</h1>
     <ul>
         <li><a href="{% url 'top' %}">ホーム</a></li>
         <li><a href="{% url 'create-memo' %}">新しい投稿</a></li>
         <li><a href="{% url 'timeline' %}">タイムライン</a></li>
+        <li>{% if request.user.is_authenticated %}
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">ログアウト</button>
+            </form>
+            {% else %}
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">ログイン</button>
+            </form>
+            {% endif %}
+        </li>
     </ul>
 </nav>
-<h1>タイムライン</h1>
+<div class="back-img" id="text-to-hide">
+    <div class="v-text">
+        <h1>食歴。</h1>
+    </div>
+</div>
+<div id="time-line">
+    <h1>みんなの投稿</h1>
 
-<ul>
+
     {% for memo in memos %}
-    <li>
-        <strong>{{ memo.user.username }}</strong>: {{ memo.name }}
-        <p>{{ memo.description }}</p>
-        <p>投稿日時: {{ memo.Date }}</p>
-        {% if memo.image %}
-        <img src="{{ memo.image.url }}" alt="{{ memo.name }}" style="width: 200px; height: auto;">
-        {% endif %}
-
-        <a href="{{ memo.twitter_share_url }}" target="_blank">
-            <img src="{% static 'css/img/icon.png' %}" alt="twitter" style="width: 50px; height: auto;">
-        </a>
-    </li>
+    <div class="memo-container">
+        <div class="line-1">
+            <p>日付:{{memo.Date}}</p>
+            <p>投稿主:{{ memo.user.username }}</p>
+        </div>
+        <div class="line-2">
+            <p>店舗名:{{ memo.name }}</p>
+        </div>
+        <div class="line-3">
+            <p>感想:{{ memo.description }}</p>
+        </div>
+        <div class="line-4">
+            {% if memo.image %}
+            <img src="{{ memo.image.url }}" alt="{{ memo.name }}">
+            {% else %}
+            <img src="/static/css/img/noimg.png" alt="">
+            {% endif %}
+        </div>
+        <div class="icon">
+            <a href="{{ memo.twitter_share_url }}" target="_blank">
+                <img src="{% static 'css/img/icon.png' %}" alt="twitter">
+            </a>
+        </div>
+    </div>
     {% endfor %}
-</ul>
+
+</div>
+<script>
+
+    window.addEventListener('scroll', function () {
+        const textElement = document.getElementById('text-to-hide');
+        const scrollPosition = window.scrollY;
+
+        // スクロールが100pxを超えたら文字をフェードアウト
+        if (scrollPosition > 250) {
+            textElement.style.opacity = '0'; // 透明にする
+            textElement.style.transition = 'opacity 0.4s ease'; // フェードアウトのアニメーション
+        } else {
+            textElement.style.opacity = '1'; // 100px未満なら再表示
+        }
+    });
+</script>
 {% endblock %}

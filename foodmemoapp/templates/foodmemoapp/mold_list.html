@@ -1,81 +1,83 @@
 {% extends 'foodmemoapp/base.html' %}{% block content %}
-<nav>
-    <h1>Food Diary</h1>
-    <ul>
-        <li><a href="{% url 'top' %}">ホーム</a></li>
-        <li><a href="{% url 'create-memo' %}">新しい投稿</a></li>
-        <li><a href="{% url 'timeline' %}">タイムライン</a></li>
-        <li>{% if request.user.is_authenticated %}
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button type="submit">ログアウト</button>
-            </form>
-            {% else %}
-            <form action="{% url 'login' %}" method="post">
-                {% csrf_token %}
-                <button type="submit">ログイン</button>
-            </form>
-            {% endif %}
-        </li>
-    </ul>
-</nav>
-<div class="back-img" id="text-to-hide">
-    <div class="v-text">
-        <h1>食歴。</h1>
+<div id="bottom-space">
+    <nav>
+        <h1>Food Diary</h1>
+        <ul>
+            <li><a href="{% url 'top' %}">ホーム</a></li>
+            <li><a href="{% url 'create-memo' %}">新しい投稿</a></li>
+            <li><a href="{% url 'timeline' %}">タイムライン</a></li>
+            <li>{% if request.user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">ログアウト</button>
+                </form>
+                {% else %}
+                <form action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">ログイン</button>
+                </form>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+    <div class="back-img" id="text-to-hide">
+        <div class="v-text">
+            <h1>食歴。</h1>
+        </div>
     </div>
+    <main>
+        <div class="list-search">
+            <h3>My list Search</h3>
+            <form action="" method="get">
+                <input type="text" name="search" value="{{search}}">
+                <input type="submit" value="検索">
+            </form>
+        </div>
+
+
+        {% for task in memos %}
+        <div class="memo-container">
+            <div class="line-1">
+                <p>日付:{{task.Date}}</p>
+                <p>投稿主:{{task.user}}</p>
+            </div>
+            <div class="line-2">
+                <p>店舗名:{{ task.name }}</p>
+                <a href="{% url 'edit-memo' task.id %}">
+                    <p>編集</p>
+                </a>
+                <a href="{% url 'delete-memo' task.id %}">
+                    <p>削除</p>
+                </a>
+            </div>
+            <div class="line-3">
+                <p>感想:{{task.description}}</p>
+            </div>
+            <div class="line-4">
+                {% if task.image %}
+                <img src="{{ task.image.url }}" alt="{{ task.name }}" style="max-width: 300px;">
+                {% else %}
+                <img src="/static/css/img/noimg.png" alt="">
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+ 
+        <script>
+
+            window.addEventListener('scroll', function () {
+                const textElement = document.getElementById('text-to-hide');
+                const scrollPosition = window.scrollY;
+
+                // スクロールが100pxを超えたら文字をフェードアウト
+                if (scrollPosition > 250) {
+                    textElement.style.opacity = '0'; // 透明にする
+                    textElement.style.transition = 'opacity 0.4s ease'; // フェードアウトのアニメーション
+                } else {
+                    textElement.style.opacity = '1'; // 100px未満なら再表示
+                }
+            });
+        </script>
+    </main>
 </div>
-<main>
-    <div class="list-search">
-        <h3>My list Search</h3>
-        <form action="" method="get">
-            <input type="text" name="search" value="{{search}}">
-            <input type="submit" value="検索">
-        </form>
-    </div>
-
-
-    {% for task in memos %}
-    <div class="memo-container">
-        <div class="line-1">
-            <p>{{task.Date}}</p>
-            <p>{{task.user}}</p>
-        </div>
-        <div class="line-2">
-            <p>{{ task.name }}</p>
-            <a href="{% url 'edit-memo' task.id %}">
-                <p>編集</p>
-            </a>
-            <a href="{% url 'delete-memo' task.id %}">
-                <p>削除</p>
-            </a>
-        </div>
-        <div class="line-3">
-            {{task.description}}
-        </div>
-        <div class="line-4">
-            {% if task.image %}
-            <img src="{{ task.image.url }}" alt="{{ task.name }}" style="max-width: 300px;">
-            {% else %}
-            <img src="/static/css/img/noimg.png" alt="">
-            {% endif %}
-        </div>
-    </div>
-    {% endfor %}
-
-    <script>
-
-        window.addEventListener('scroll', function () {
-            const textElement = document.getElementById('text-to-hide');
-            const scrollPosition = window.scrollY;
-
-            // スクロールが100pxを超えたら文字をフェードアウト
-            if (scrollPosition > 250) {
-                textElement.style.opacity = '0'; // 透明にする
-                textElement.style.transition = 'opacity 0.4s ease'; // フェードアウトのアニメーション
-            } else {
-                textElement.style.opacity = '1'; // 100px未満なら再表示
-            }
-        });
-    </script>
-</main>
 {% endblock content %}

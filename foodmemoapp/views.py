@@ -41,15 +41,20 @@ class CreatePage(LoginRequiredMixin,CreateView):
     model = mold
     fields = ["name","description","image","completed"]
     success_url = reverse_lazy("top")
-
+    
     def form_valid(self,form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+
 class UpdatePage(LoginRequiredMixin,UpdateView):
     model = mold
-    fields = "__all__"
+    fields = ["name","description","image","completed"]
     success_url = reverse_lazy("top")
+    
+    def form_valid(self,form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 class DeletePage(LoginRequiredMixin,DeleteView):
     model = mold
@@ -139,6 +144,6 @@ def share_on_twitter_view(request, pk):
     content = memo.description or memo.name
     url = request.build_absolute_uri(memo.get_absolute_url())
     twitter_share_url = generate_twitter_share_url(content, url)
-    
+    print(f"Generated Twitter URL: {twitter_share_url}")
     return redirect(twitter_share_url) 
 

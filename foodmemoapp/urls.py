@@ -7,7 +7,7 @@ from . import views
 
 urlpatterns = [
     path("",TopView.as_view(),name="top"),
-    path('memo/<int:pk>/',DetailPage.as_view(),name="memo"),
+    path('memo/<int:pk>/',DetailPage.as_view(),name="memo-detail"),
     path('create-memo/',CreatePage.as_view(),name='create-memo'),
     path('edit-memo/<int:pk>/',UpdatePage.as_view(),name='edit-memo'),
     path('delete-memo/<int:pk>/',DeletePage.as_view(),name='delete-memo'),

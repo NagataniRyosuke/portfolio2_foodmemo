@@ -1,5 +1,6 @@
 {% extends 'foodmemoapp/base.html' %}{% block content %}
-<div id="bottom-space">
+
+<body>
     <nav>
         <h1>Food Diary</h1>
         <ul>
@@ -55,29 +56,58 @@
             </div>
             <div class="line-4">
                 {% if task.image %}
-                <img src="{{ task.image.url }}" alt="{{ task.name }}" style="max-width: 300px;">
+                <img src="{{ task.image.url }}" class="{% if is_rotated %}portrait{% endif %}">
                 {% else %}
                 <img src="/static/css/img/noimg.png" alt="">
                 {% endif %}
             </div>
         </div>
         {% endfor %}
- 
-        <script>
+</body>
+<script>
 
-            window.addEventListener('scroll', function () {
-                const textElement = document.getElementById('text-to-hide');
-                const scrollPosition = window.scrollY;
+    window.addEventListener('scroll', function () {
+        const textElement = document.getElementById('text-to-hide');
+        const scrollPosition = window.scrollY;
 
-                // スクロールが100pxを超えたら文字をフェードアウト
-                if (scrollPosition > 250) {
-                    textElement.style.opacity = '0'; // 透明にする
-                    textElement.style.transition = 'opacity 0.4s ease'; // フェードアウトのアニメーション
+        // スクロールが100pxを超えたら文字をフェードアウト
+        if (scrollPosition > 250) {
+            textElement.style.opacity = '0'; // 透明にする
+            textElement.style.transition = 'opacity 0.4s ease'; // フェードアウトのアニメーション
+        } else {
+            textElement.style.opacity = '1'; // 100px未満なら再表示
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const images = document.querySelectorAll('.line-4 img');
+
+        images.forEach(function (img) {
+            img.onload = function () {
+                const width = img.naturalWidth;
+                const height = img.naturalHeight;
+
+                const storedOrientation = localStorage.getItem(img.src);
+
+
+                if (!storedOrientation) {
+                    if (height > width) {
+                        img.classList.add('portrait');
+                        localStorage.setItem(img.src, 'portrait');
+                    } else {
+                        img.classList.add('landscape');
+                        localStorage.setItem(img.src, 'landscape');
+                    }
                 } else {
-                    textElement.style.opacity = '1'; // 100px未満なら再表示
+                    // localStorageに保存されている向きに従ってクラスを再適用
+                    img.classList.add(storedOrientation);
                 }
-            });
-        </script>
-    </main>
-</div>
+            };
+        });
+    });
+
+
+</script>
+</main>
+
 {% endblock content %}

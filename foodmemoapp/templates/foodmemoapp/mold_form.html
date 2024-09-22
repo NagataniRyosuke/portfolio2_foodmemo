@@ -31,7 +31,7 @@
     <form action="" method="post" enctype="multipart/form-data" class="form-2">
         {% csrf_token %}
         {{form.as_p}}
-        <input type="submit" value="追加">
+        <button type="submit" name="rotate" id="rotate">保存</button>
     </form>
 </div>
 <div id="store-search">
@@ -124,6 +124,7 @@
             textElement.style.opacity = '1'; // 100px未満なら再表示
         }
     });
+
 </script>
 
 {% endblock content %}

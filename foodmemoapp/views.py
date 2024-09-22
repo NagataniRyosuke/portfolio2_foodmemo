@@ -81,10 +81,14 @@ class RegisterPage(FormView):
 
 
 from requests.exceptions import RequestException
+from .forms import MoldForm
    
 def search_restaurants(request):
     query = request.GET.get('query', "")
     places_data = []
+    
+    # 店舗検索を行ったときにform欄が消えないように同時に再レンダリングするためのform
+    form = MoldForm() 
 
     if query:
         url = 'https://webservice.recruit.co.jp/hotpepper/gourmet/v1/'
@@ -103,8 +107,10 @@ def search_restaurants(request):
                 print(f"APIリクエストが失敗しました: {response.status_code}")
         except RequestException as e:
             print(f"APIリクエスト中にエラーが発生しました: {e}")
+        
     
     return render(request, 'foodmemoapp/mold_form.html', {
+        'form':form,
         'query': query,
         'restaurants': places_data,  
         'google_maps_api_key': settings.GOOGLE_MAPS_API_KEY,
@@ -120,21 +126,30 @@ class TimelineView(LoginRequiredMixin, ListView):
         memos = mold.objects.exclude(user=self.request.user).order_by('-Date')
         for memo in memos:
             content = memo.description or memo.name
-            memo.twitter_share_url = generate_twitter_share_url(content)
+            url = self.request.build_absolute_uri(memo.get_absolute_url())
+            memo.twitter_share_url = generate_twitter_share_url(content, url)
 
         context["memos"] = memos
         return context
+
     
 from urllib.parse import quote
 from django.shortcuts import get_object_or_404, redirect
 from .models import mold
-
+from urllib.parse import quote_from_bytes
 
 def generate_twitter_share_url(content, url=None):
     base_url = "https://twitter.com/intent/tweet"
-    share_text = f"text={quote(content)}"
+    
+    # contentがNoneの場合は空文字に置き換え
+    if content is None:
+        content = ""
+
+    share_text = f"text={quote_from_bytes(content.encode('utf-8'))}"
+
+    # urlがNoneの場合の処理
     if url:
-        return f"{base_url}?{share_text}&url={quote(url)}"
+        return f"{base_url}?{share_text}&url={quote_from_bytes(url.encode('utf-8'))}"
     else:
         return f"{base_url}?{share_text}"
 
@@ -147,3 +162,21 @@ def share_on_twitter_view(request, pk):
     print(f"Generated Twitter URL: {twitter_share_url}")
     return redirect(twitter_share_url) 
 
+
+from django.shortcuts import render, redirect
+from .models import ImageModel
+from .forms import ImageForm  # フォームを定義
+
+def create_image(request):
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            image_instance = form.save(commit=False)
+            # ユーザーが回転ボタンを押したかどうかで回転フラグを設定
+            image_instance.is_rotated = request.POST.get('rotate') == 'on'
+            image_instance.save()
+            return redirect('image_list')
+    else:
+        form = ImageForm()
+    
+    return render(request, 'create_image.html', {'form': form})

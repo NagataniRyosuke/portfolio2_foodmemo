@@ -20,6 +20,10 @@
     </ul>
 </nav>
 <div class="back-img" id="text-to-hide">
+    <video autoplay muted loop id="background-video">
+        <source src="/static/css/img/backmovie.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
     <div class="v-text">
         <h1>食歴。</h1>
     </div>
@@ -50,9 +54,10 @@
         {% for restaurant in restaurants %}
         <li class="restaurant-item">
             <h3><a href="javascript:void(0);"
-                    onclick="showOnMap('{{ restaurant.address|escapejs }}', '{{ restaurant.name|escapejs }}');">
+                    onclick="showOnMap('{{ restaurant.address|escapejs }}'); setRestaurantName('{{ restaurant.name|escapejs }}');">
                     {{restaurant.name }}
-                </a>
+                </a>  
+            <!-- onclick=setRestaurantName...は店舗名をクリックした際に店舗名を自動でformに書き込んでくれる -->
             </h3>
             <p>住所: {{ restaurant.address }}</p>
             {% if restaurant.image_url.shop_image1 %}
@@ -62,6 +67,23 @@
         </li>
         {% endfor %}
     </ul>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if restaurants.has_previous %}
+                <a href="?query={{ query }}&page={{ restaurants.previous_page_number }}">前へ</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ restaurants.number }} of {{ restaurants.paginator.num_pages }}
+            </span>
+
+            {% if restaurants.has_next %}
+                <a href="?query={{ query }}&page={{ restaurants.next_page_number }}">次へ</a>
+            {% endif %}
+        </span>
+    </div>
+
     {% else %}
     <p>該当する店舗が見つかりませんでした。</p>
     {% endif %}
@@ -124,6 +146,13 @@
             textElement.style.opacity = '1'; // 100px未満なら再表示
         }
     });
+    function setRestaurantName(restaurantName){
+        const nameField = document.querySelector('input[name="name"]');
+
+        if (nameField) {
+            nameField.value = restaurantName;
+        }
+    }
 
 </script>
 

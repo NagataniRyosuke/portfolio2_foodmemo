@@ -22,6 +22,10 @@
     </ul>
 </nav>
 <div class="back-img" id="text-to-hide">
+    <video autoplay muted loop id="background-video">
+        <source src="/static/css/img/backmovie.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
     <div class="v-text">
         <h1>食歴。</h1>
     </div>
@@ -72,5 +76,36 @@
             textElement.style.opacity = '1'; // 100px未満なら再表示
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const images = document.querySelectorAll('.line-4 img');
+
+    images.forEach(function (img) {
+        img.onload = function () {
+            const width = img.naturalWidth;
+            const height = img.naturalHeight;
+
+            // 画像が縦長であればportraitクラスを追加し、横長であればlandscapeクラスを追加
+            const storedOrientation = localStorage.getItem(img.src);
+            if (!storedOrientation) {
+                if (height > width) {
+                    img.classList.add('portrait');
+                    localStorage.setItem(img.src, 'portrait');
+                } else {
+                    img.classList.add('landscape');
+                    localStorage.setItem(img.src, 'landscape');
+                }
+            } else {
+                img.classList.add(storedOrientation);
+            }
+        };
+
+        // もしすでに画像がキャッシュされていた場合でも処理を行う
+        if (img.complete) {
+            img.onload();  // 画像が既に読み込まれていた場合、onloadを手動で呼び出す
+        }
+    });
+});
+
 </script>
 {% endblock %}

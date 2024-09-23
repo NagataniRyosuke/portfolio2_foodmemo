@@ -48,23 +48,38 @@
     .back-img {
         margin: 0;
         height: 100vh;
-        background-image: url('/static/css/img/cook_photo19.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
         position: relative;
+        overflow: hidden;
+    }
+
+    #background-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+        /* コンテンツの背後に配置 */
+        object-fit: cover;
+        /* 動画を全画面にフィットさせる */
     }
 
     .v-text {
-        font-size: 40px;
-        position: absolute;
-        top: 175px;
-        right: 450px;
+        position: relative;
+        z-index: 1;
+        top: 30%;
+        left: 70%;
+        color: white;
+        text-align: center;
+        font-size: 3rem;
+        font-weight: bold;
         writing-mode: vertical-rl;
-        text-orientation: upright;
-        color: black;
-        transition: opacity 0.1s ease;
+        /* 文字を縦にする */
     }
+
 
     .login {
         width: 40%;
@@ -233,245 +248,247 @@
         padding-top: 10px;
     }
 
-@media (max-width: 400px) {
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Zen Kurenaido",
-            sans-serif;
-        font-weight: 200;
-        font-style: normal;
+    @media (max-width: 400px) {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Zen Kurenaido",
+                sans-serif;
+            font-weight: 200;
+            font-style: normal;
+        }
+
+        #map {
+            height: 60%;
+            width: 100%;
+            margin: 20px auto 10px;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        nav {
+            background-color: #fff;
+            padding: 5px 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease-in-out;
+            position: fixed;
+            z-index: 10;
+            width: 100%;
+            top: 0;
+        }
+
+        nav a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 5px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #007bff;
+        }
+
+        ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .back-img {
+            background-image: url('/static/css/img/cook_photo19.jpg');
+            width: 100%;
+            height: 300px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            /* 横幅100%でアスペクト比を維持 */
+            background-position: center;
+            /* 画像を中央に配置 */
+        }
+
+
+        .v-text {
+            font-size: 20px;
+            position: absolute;
+            top: 100px;
+            right: 120px;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            color: black;
+            transition: opacity 0.1s ease;
+        }
+
+        /* ログイン */
+
+        .login {
+            width: 75%;
+            background-color: rgb(255, 247, 240);
+            flex-direction: column;
+            margin: auto;
+            margin-top: 200px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+        }
+
+        .login h2 {
+            text-align: center;
+        }
+
+        .login-form {
+            padding: 25px;
+            text-align: center;
+        }
+
+        #new-login {
+            width: 40%;
+            flex-direction: column;
+            margin: auto;
+            margin-bottom: 50px;
+        }
+
+        .list-search {
+            padding-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .list-search h3 {
+            padding-bottom: 10px;
+            font-size: 30px;
+        }
+
+        .memo-container {
+            width: 90%;
+            background-color: rgb(255, 247, 240);
+            flex-direction: column;
+            margin: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+        }
+
+        .line-4 {
+            text-align: center;
+        }
+
+        .line-1,
+        .line-2 {
+            display: flex;
+        }
+
+        .line-1 p,
+        .line-2 p,
+        .line-3 p {
+            padding: 10px 10px 10px 10px;
+            font-size: 15px;
+        }
+
+        .line-4 p {
+            width: 300px;
+            height: 200px;
+        }
+
+        .line-4 img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .line-4 img.portrait {
+            transform: rotate(90deg);
+            object-fit: cover;
+        }
+
+
+        main {
+            margin: 30px;
+        }
+
+        #form-container {
+            margin-top: 20px;
+        }
+
+        .form-1 {
+            display: flex;
+            padding: 20px 20px 20px 20px;
+        }
+
+        .form-2 {
+            padding: 0px 20px 20px 20px;
+        }
+
+        #store-search {
+            text-align: center;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        #store-searched {
+            text-align: center;
+        }
+
+        #delete-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 30%;
+            background-color: rgba(255, 247, 240, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #delete-container a {
+            padding: 15px;
+            font-size: 30px;
+        }
+
+        #delete-container form {
+            text-align: center;
+            font-size: 25px;
+            color: rgb(255, 129, 129);
+            padding-top: 60px;
+        }
+
+        #time-line h1 {
+            padding: 50px;
+            text-align: center;
+        }
+
+        .icon {
+            position: relative;
+        }
+
+        .icon img {
+            position: absolute;
+            right: 10px;
+        }
+
+        #register {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 30%;
+            background-color: rgba(255, 247, 240, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px 0 0 15px;
+        }
+
+        #comfirm_account {
+            padding-top: 10px;
+        }
+
     }
-
-    #map {
-        height: 60%;
-        width: 100%;
-        margin: 20px auto 10px;
-    }
-
-    body {
-        width: 100%;
-        height: 100%;
-    }
-
-    nav {
-        background-color: #fff;
-        padding: 5px 10px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: all 0.3s ease-in-out;
-        position: fixed;
-        z-index: 10;
-        width: 100%;
-        top: 0;
-    }
-
-    nav a {
-        color: #333;
-        text-decoration: none;
-        margin: 0 5px;
-        font-size: 10px;
-        font-weight: 500;
-    }
-
-    nav a:hover {
-        color: #007bff;
-    }
-
-    ul {
-        display: flex;
-        list-style: none;
-    }
-
-    .back-img {
-        background-image: url('/static/css/img/cook_photo19.jpg');
-        width: 100%;
-        height: 300px;
-        background-repeat: no-repeat;
-        background-size: cover; /* 横幅100%でアスペクト比を維持 */
-        background-position: center; /* 画像を中央に配置 */
-    }
-    
-
-    .v-text {
-        font-size: 20px;
-        position: absolute;
-        top: 100px;
-        right: 120px;
-        writing-mode: vertical-rl;
-        text-orientation: upright;
-        color: black;
-        transition: opacity 0.1s ease;
-    }
-
-    /* ログイン */
-
-    .login {
-        width: 75%;
-        background-color: rgb(255, 247, 240);
-        flex-direction: column;
-        margin: auto;
-        margin-top: 200px;
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 50px;
-    }
-
-    .login h2 {
-        text-align: center;
-    }
-
-    .login-form {
-        padding: 25px;
-        text-align: center;
-    }
-
-    #new-login {
-        width: 40%;
-        flex-direction: column;
-        margin: auto;
-        margin-bottom: 50px;
-    }
-
-    .list-search {
-        padding-bottom: 30px;
-        text-align: center;
-        position: relative;
-    }
-
-    .list-search h3 {
-        padding-bottom: 10px;
-        font-size: 30px;
-    }
-
-    .memo-container {
-        width: 90%;
-        background-color: rgb(255, 247, 240);
-        flex-direction: column;
-        margin: auto;
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 50px;
-    }
-
-    .line-4 {
-        text-align: center;
-    }
-
-    .line-1,
-    .line-2 {
-        display: flex;
-    }
-
-    .line-1 p,
-    .line-2 p,
-    .line-3 p {
-        padding: 10px 10px 10px 10px;
-        font-size: 15px;
-    }
-
-    .line-4 p {
-        width: 300px;
-        height: 200px;
-    }
-
-    .line-4 img {
-        max-width: 80%;
-        max-height: 80%;
-        object-fit: cover;
-        display: block;
-        margin: 0 auto;
-    }
-
-    .line-4 img.portrait {
-        transform: rotate(90deg);
-        object-fit: cover;
-    }
-
-
-    main {
-        margin: 30px;
-    }
-
-    #form-container {
-        margin-top: 20px;
-    }
-
-    .form-1 {
-        display: flex;
-        padding: 20px 20px 20px 20px;
-    }
-
-    .form-2 {
-        padding: 0px 20px 20px 20px;
-    }
-
-    #store-search {
-        text-align: center;
-        padding-bottom: 10px;
-        margin-bottom: 10px;
-    }
-
-    #store-searched {
-        text-align: center;
-    }
-
-    #delete-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 80%;
-        height: 30%;
-        background-color: rgba(255, 247, 240, 0.8);
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    #delete-container a {
-        padding: 15px;
-        font-size: 30px;
-    }
-
-    #delete-container form {
-        text-align: center;
-        font-size: 25px;
-        color: rgb(255, 129, 129);
-        padding-top: 60px;
-    }
-
-    #time-line h1 {
-        padding: 50px;
-        text-align: center;
-    }
-
-    .icon {
-        position: relative;
-    }
-
-    .icon img {
-        position: absolute;
-        right: 10px;
-    }
-
-    #register {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 80%;
-        height: 30%;
-        background-color: rgba(255, 247, 240, 0.8);
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 15px 0 0 15px;
-    }
-
-    #comfirm_account {
-        padding-top: 10px;
-    }
-
-}

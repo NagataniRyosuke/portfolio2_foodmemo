@@ -83,12 +83,15 @@ class RegisterPage(FormView):
 from requests.exceptions import RequestException
 from .forms import MoldForm
    
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 def search_restaurants(request):
     query = request.GET.get('query', "")
     places_data = []
-    
-    # 店舗検索を行ったときにform欄が消えないように同時に再レンダリングするためのform
-    form = MoldForm() 
+    form = MoldForm()  # フォームをレンダリング
+
+    # 1ページあたりの店舗数
+    per_page = 5
 
     if query:
         url = 'https://webservice.recruit.co.jp/hotpepper/gourmet/v1/'
@@ -96,7 +99,7 @@ def search_restaurants(request):
             'key': settings.HOTPEPPER_API_KEY,
             'keyword': query,
             'format': 'json',
-            'count': 5,
+            'count': 100,  # 最大数まで取得する（APIの制限内）
         }
         try:
             response = requests.get(url, params=params)
@@ -107,15 +110,26 @@ def search_restaurants(request):
                 print(f"APIリクエストが失敗しました: {response.status_code}")
         except RequestException as e:
             print(f"APIリクエスト中にエラーが発生しました: {e}")
-        
-    
+
+    # ページネーションの設定
+    paginator = Paginator(places_data, per_page)
+    page = request.GET.get('page')  # クエリパラメータからページ番号を取得
+
+    try:
+        restaurants = paginator.page(page)
+    except PageNotAnInteger:
+        restaurants = paginator.page(1)  # ページ番号が整数でない場合は最初のページ
+    except EmptyPage:
+        restaurants = paginator.page(paginator.num_pages)  # 存在しないページの場合は最後のページ
+
     return render(request, 'foodmemoapp/mold_form.html', {
-        'form':form,
+        'form': form,
         'query': query,
-        'restaurants': places_data,  
+        'restaurants': restaurants,  # ページネートされた店舗データ
         'google_maps_api_key': settings.GOOGLE_MAPS_API_KEY,
+        'paginator': paginator,
     })
-    
+
 class TimelineView(LoginRequiredMixin, ListView):
     model = mold
     context_object_name = 'memos'

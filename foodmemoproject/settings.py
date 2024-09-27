@@ -26,10 +26,10 @@ SECRET_KEY = "django-insecure-@f-%n2va977s^co^&(w1wqaj4x26pr+xa3nk0t2)4d3)@rjjx^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['portfolio2-foodmemo.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['portfolio2-foodmemo.onrender.com', 'localhost', '127.0.0.1','98.83.143.220']
 
 
-# Application definition
+# Application definitio
 
 INSTALLED_APPS = [
     "foodmemoapp",
@@ -141,6 +141,4 @@ GOOGLE_MAPS_API_KEY = 'AIzaSyCefnYHy-VQpgBkTX2lz50HMyBch7XbGiI'
 
 CSRF_COOKIE_SECURE = False
 CSRF_TRUSTED_ORIGINS = ['https://portfolio2-foodmemo.onrender.com']
-
-
 

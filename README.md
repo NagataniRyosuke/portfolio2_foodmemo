@@ -10,7 +10,7 @@
 -地図検索機能
 
 
-##[遷移先URL](https://portfolio2-foodmemo.onrender.com)
+##[遷移先URL](http://98.83.143.220:8000/login/?next=/)
 
 ##改善・追加部分
 -複数枚写真掲載
